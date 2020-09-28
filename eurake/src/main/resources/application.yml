@@ -1,0 +1,41 @@
+server:
+  port: 8761
+
+eureka:
+  client:
+#    是否将自己注册到Eureka
+    register-with-eureka: false
+#    是否从Eureka获取注册信息
+    fetch-registry: false
+#    设置与Eureka交互的地址，查询和注册服务都需要依赖这个地址
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+
+#互相注册形成集群，启动的时候同样的jar包选用不同profiles参数启动，例如java -jar xxx.jar --spring.profiles.active=peer1这样启动第一个节点
+#生产者注册到集群只需要把集群地址放在defaultZone上用逗号隔开，如果只配置某个节点也能注册到集群，因为多个eureka之间的数据会相互同步。
+#spring:
+#  application:
+#    name: hah
+#---
+#spring:
+#  profiles: peer1
+#server:
+#  port: 8761
+#eureka:
+#  instance:
+#    hostname: peer1
+#    client:
+#      serviceUrl:
+#        defaultZone: http://peer2:8762/eureka/
+#---
+#spring:
+#  profiles: peer2
+#server:
+#  port: 8762
+#eureka:
+#  instance:
+#    hostname: peer2
+#    client:
+#      serviceUrl:
+#        defaultZone: http://peer1:8761/eureka/

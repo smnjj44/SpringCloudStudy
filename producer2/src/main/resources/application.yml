@@ -1,0 +1,22 @@
+server:
+  port: 8001
+
+#controllder 需要有前缀/xx 不然跳转到controller actuator前缀到接口 http://localhost:8010/actuator/health这个访问
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+#注册到eureka的应用名称
+spring:
+  application:
+    name: provider-user
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+      #把自己ip注册到eureka，有密码认证的话就http://username:password@localhost:xxxx/eureka/或http://username:password@peer1/eureka/这样的格式去连接
+  instance:
+    prefer-ip-address: true

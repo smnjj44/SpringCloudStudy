@@ -1,0 +1,34 @@
+server:
+  port: 8010
+
+#controllder 需要有前缀/xx 不然跳转到controller actuator前缀到接口 http://localhost:8010/actuator/health这个访问
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+
+#注册到eureka的应用名称
+spring:
+  application:
+    name: consumer-movie
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+      #把自己ip注册到eureka
+  instance:
+    prefer-ip-address: true
+
+#配置浏览对应的提供者的负载均衡规则,也可以用java代码配置配置类去实现,默认是轮询，现在这里配置为随机
+provider-user:
+  ribbon:
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
+
+#如果不想消费者和eurake一起用这里可以这样配置，去掉启动类@EnableDiscoveryClient配置，依赖starter-eureka修改为starter-ribbon
+#这样就不用通过eurake去获得对应生产者的ip
+#provider-user:
+#  ribbon:
+#    listOfServers: localhost:8000,localhost:8001
