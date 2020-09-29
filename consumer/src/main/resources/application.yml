@@ -27,6 +27,11 @@ provider-user:
   ribbon:
     NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
 
+feign:
+  hystrix:
+    enabled: true
+
+
 #如果不想消费者和eurake一起用这里可以这样配置，去掉启动类@EnableDiscoveryClient配置，依赖starter-eureka修改为starter-ribbon
 #这样就不用通过eurake去获得对应生产者的ip
 #provider-user:

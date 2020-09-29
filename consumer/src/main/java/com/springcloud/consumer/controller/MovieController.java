@@ -1,5 +1,7 @@
 package com.springcloud.consumer.controller;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import com.springcloud.consumer.feign.UserFeignClient;
 import com.springcloud.consumer.vo.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,5 +50,27 @@ public class MovieController {
     @GetMapping("user/feign/{id}")
     public User findByIdFeign(@PathVariable int id){
         return this.userFeignClient.findById(id);
+    }
+
+
+    //启动类添加注解EnableHystrix，再在方法上配置好回滚的方法和设置回滚的超时参数之类的问题
+    //执行回退逻辑并不代表断路器已经打开。请求失败，超时，失败，被拒绝以及断路器打开时等都会执行回退逻辑，等失败率到达一个阙值（默认是5秒内20次失败）才会打开断路器
+    @GetMapping("/user/Hystrix/{id}")
+    @HystrixCommand(fallbackMethod = "findBYIdFallback",commandProperties = {
+            @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds",value = "5000"),
+            @HystrixProperty(name = "metrics.rollingStats.timeInMilliseconds",value = "10000")
+    },threadPoolProperties = {
+            @HystrixProperty(name = "coreSize",value = "1"),
+            @HystrixProperty(name = "maxQueueSize",value = "10")
+    })
+    public User findByIdHystrix(@PathVariable int id){
+        return this.restTemplate.getForObject("http://provider-user/"+id,User.class);
+    }
+
+    public User findBYIdFallback(int id){
+        User user = new User();
+        user.setId(0);
+        user.setName("默认用户");
+        return user;
     }
 }
