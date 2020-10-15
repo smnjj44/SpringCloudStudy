@@ -21,4 +21,10 @@ public class UserController {
         user.setName("李飞1");
         return user;
     }
+
+    //测试网关跳转
+    @GetMapping("/zuul/test/{id}")
+    public String zuulMovieTest(@PathVariable int id){
+        return "test zuul" + id;
+    }
 }
