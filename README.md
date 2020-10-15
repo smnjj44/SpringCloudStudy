@@ -1,7 +1,7 @@
 # SpringCloudStudy
 ❤️
 五大组件：<br>
-springcloud config:<br>
+spring cloud config:Spring Cloud Config为分布式系统中的外部配置提供服务器和客户端支持。方便部署与运维。分客户端、服务端。服务端也称分布式配置中心，是一个独立的微服务应用，用来连接配置服务器并为客户端提供获取配置信息，加密/解密信息等访问接口。客户端则是通过指定配置中心来管理应用资源，以及与业务相关的配置内容，并在启动的时候从配置中心获取和加载配置信息。默认采用 git，并且可以通过 git 客户端工具来方便管理和访问配置内容。<br>
 
 
 Ribbon:ribbon是netflix发布的负载均衡器，它有助于控制http和tcp客户端的行为<br>
