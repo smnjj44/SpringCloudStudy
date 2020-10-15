@@ -22,4 +22,7 @@ Eurake:Eurake是netflix开源的服务发现组件，本身给予rest的服务�
 zuul:zuul是什么 zuul 是netflix开源的一个API Gateway 服务器, 本质上是一个web servlet应用。 Zuul 在云平台上提供动态路由,监控,弹性,安全等边缘服务的框架。<br>
 
 
-Feign:Feign是Netflix开发的声明式，模块化的http客户端
+Feign:Feign是Netflix开发的声明式，模块化的http客户端<br>
+
+springcloudconfig和全链路日志及部分第八章没啥作用的示例先不展示，详细请看书本
+
