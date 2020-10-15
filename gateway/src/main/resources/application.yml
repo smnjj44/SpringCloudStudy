@@ -1,0 +1,77 @@
+server:
+  port: 8040
+spring:
+  application:
+    name: gateway-zuul
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+#加这个才能启动http://localhost:8040/routes查看端点
+management:
+  security:
+    enabled: false
+
+#1。自定义指定微服务路径 http://localhost:8040/producer/zuul/zuul/test/1和http://localhost:8000/zuul/test/1是一致的
+#是/producer/zuul/**映射provider-user，通过/producer/zuul/**可以代表provider-user
+#zuul:
+#  routes:
+#    provider-user: /producer/zuul/**
+
+#2。忽略某个微服务
+#zuul:
+#  ignored-services: provider-user
+
+#3。忽略所有微服务,只代理某个服务
+#zuul:
+#  ignored-services: '*'
+#  routes:
+#    provider-user: /producer/zuul/**
+
+#4。指定serviceId和对应路径,效果和1示例一样
+#zuul:
+#  routes:
+#    user-route: #user-route只是一个名称，可以随时起名
+#      service-id: provider-user
+#      path: /producer/zuul/**
+
+#5。同时指定url和path，这样不会执行hystrix和ribbon
+#zuul:
+#  routes:
+#    user-route: #user-route只是一个名称，可以随时起名
+#      url: http://localhost:8000
+#      path: /producer/zuul/**
+
+#6。同时指定path和Url，不破坏hystrix和ribbon
+#zuul:
+#  routes:
+#    user-route: #user-route只是一个名称，可以随时起名
+#      path: /producer/zuul/**
+#      service-id: provider-user
+#ribbon:
+#  eurake:
+#    enabled: false #禁用eurake
+#provider-user:
+#  ribbon:
+#    listOfServers: localhost:8000,localhost:8001
+
+#7。使用正则表达式
+
+#8。路由前缀，访问/api/provider-user/1转发到provider-user的api/1。示例2和第一例一样效果
+#zuul:
+#  prefix: /api
+#  strip-prefix: false
+#  routes:
+#    provider-user: /producer/zuul/**
+#示例2
+#zuul:
+#  routes:
+#    provider-user:
+#      path: /producer/zuul/**
+#      strip-prefix: false
+
+#9。忽略某些路径，带上精粒度只开启某条路径
+#zuul:
+#  ignored-patterns: /**/user/**
+#  routes:
+#    provider-user: /producer/zuul/**
