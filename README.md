@@ -24,5 +24,5 @@ zuul:zuul是什么 zuul 是netflix开源的一个API Gateway 服务器, 本质�
 
 Feign:Feign是Netflix开发的声明式，模块化的http客户端<br>
 
-springcloudconfig和全链路日志及部分第八章没啥作用的示例先不展示，详细请看书本
+springcloudconfig和全链路日志加权限SpringCloudSleth及部分第八章没啥作用的示例先不展示，详细请看书本，接下来学习docker和k8s
 
