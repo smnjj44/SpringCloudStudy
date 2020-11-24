@@ -1,0 +1,47 @@
+#apiVersion: v1
+#kind: ReplicationController #副本控制器RC
+#metadata:
+#  name: mysql         #RC的名称
+#spec:
+#  replicas: 1         #POD副本期待数量
+#  selector:
+#    app: mysql        #符合目标的POD拥有此标签
+#  template:           #根据此模板创建POD的副本
+#    metadata:
+#      labels:
+#        app: mysql    #POD副本拥有的标签，对应RC的selector
+#      spec:
+#        containers:   #POD内容器的定义部分
+#        - name: mysql   #容器的名称
+#          image: mysql    #容器对应的镜像
+#          ports:          #容器暴露的端口
+#          - containerPort: 3306
+#          env:            #注入到容器内的环境变量
+#          - name: MYSQL_ROOT_PASSWORD
+#            value: "123456"
+
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: eurake
+spec:
+  replicas: 1
+  selector:
+    app: eurake
+  template:
+    metadata:
+      labels:
+        app: eurake
+    spec:
+      containers:
+        - name: eurake
+          image: 565587783/eurake:latest
+          ports:
+            - containerPort: 8761
+#          env:
+#            - name: MYSQL_ROOT_PASSWORD
+#              value: "123456"
+
+#selector是ReplicationController的属性，POD的标签选择器，管理POD的实例，确保集群上仅有且replicas个POD实例在运行，
+#当集群中运行的POD少于replicas个数，RC会根据template一节中定义的POD模板来生成一个新的POD，注意这里spec.template.metadata.labels必须
+#匹配之前的spec.selector，否则RC每次创建了一个无法匹配label的pod，就会死循环创建
